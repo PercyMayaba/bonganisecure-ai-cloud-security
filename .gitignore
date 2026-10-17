@@ -1,0 +1,22 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Logs and local data
+*.log
+local-data/

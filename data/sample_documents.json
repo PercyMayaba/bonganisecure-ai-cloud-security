@@ -1,0 +1,26 @@
+[
+  {
+    "id": "RISK-001",
+    "title": "Synthetic Credit Risk Overview",
+    "allowed_groups": ["Risk"],
+    "content": "The fictional portfolio has an illustrative expected credit loss of 4.2 percent. This is synthetic training data."
+  },
+  {
+    "id": "FIN-001",
+    "title": "Synthetic Quarterly Finance Summary",
+    "allowed_groups": ["Finance"],
+    "content": "The fictional department reports illustrative quarterly operating expenses of 12 million rand. This is synthetic training data."
+  },
+  {
+    "id": "SEC-001",
+    "title": "Synthetic Security Incident Procedure",
+    "allowed_groups": ["Security"],
+    "content": "For this training scenario, security staff should preserve relevant logs, record the incident timeline, and escalate according to the incident response plan."
+  },
+  {
+    "id": "SHARED-001",
+    "title": "General Cloud Security Principles",
+    "allowed_groups": ["Risk", "Finance", "Security"],
+    "content": "Apply least privilege, protect secrets, monitor access, and review permissions regularly."
+  }
+]
