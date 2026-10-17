@@ -1,0 +1,103 @@
+// BonganiSecure AI - Azure Security Detection Examples
+//
+// IMPORTANT:
+// These queries target the AzureActivity table in Log Analytics.
+// They require Azure Activity Log data to be ingested into a workspace.
+// Validate table and column names against your actual workspace schema.
+// These are hunting queries, not deployed alert rules.
+
+// ------------------------------------------------------------
+// Detection 1: Failed or unsuccessful Azure control-plane operations
+// Purpose: Find unsuccessful Azure resource management operations.
+// Note: Not every failure is malicious.
+// ------------------------------------------------------------
+AzureActivity
+| where TimeGenerated > ago(24h)
+| where ActivityStatusValue =~ "Failure"
+| project
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ActivityStatusValue,
+    ResourceGroup,
+    ResourceId,
+    SubscriptionId,
+    CallerIpAddress
+| order by TimeGenerated desc
+
+// ------------------------------------------------------------
+// Detection 2: Changes to network security groups
+// Purpose: Review successful NSG write or delete operations.
+// Investigate unexpected changes to inbound or outbound controls.
+// ------------------------------------------------------------
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where ActivityStatusValue =~ "Success"
+| where OperationNameValue has "networkSecurityGroups"
+| where OperationNameValue has_any ("write", "delete")
+| project
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ResourceGroup,
+    ResourceId,
+    CallerIpAddress
+| order by TimeGenerated desc
+
+// ------------------------------------------------------------
+// Detection 3: Azure role assignment changes
+// Purpose: Identify control-plane operations involving role assignments.
+// Review the actor, target scope, and whether the change was approved.
+// ------------------------------------------------------------
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue has "roleAssignments"
+| where OperationNameValue has_any ("write", "delete")
+| project
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ActivityStatusValue,
+    ResourceGroup,
+    ResourceId,
+    CallerIpAddress
+| order by TimeGenerated desc
+
+// ------------------------------------------------------------
+// Detection 4: Microsoft.Security provider registration activity
+// Purpose: Review provider registration operations in the lab.
+// Provider registration alone does not prove Defender plans were enabled.
+// ------------------------------------------------------------
+AzureActivity
+| where TimeGenerated > ago(30d)
+| where OperationNameValue has "register"
+| where ResourceProviderValue =~ "Microsoft.Security"
+    or ResourceId has "Microsoft.Security"
+| project
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ActivityStatusValue,
+    ResourceProviderValue,
+    ResourceId,
+    SubscriptionId
+| order by TimeGenerated desc
+
+// ------------------------------------------------------------
+// Detection 5: High-impact resource deletion review
+// Purpose: Hunt for successful deletion operations.
+// Review context before classifying any event as suspicious.
+// ------------------------------------------------------------
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where ActivityStatusValue =~ "Success"
+| where OperationNameValue has "delete"
+| project
+    TimeGenerated,
+    Caller,
+    OperationNameValue,
+    ResourceGroup,
+    ResourceId,
+    CallerIpAddress,
+    SubscriptionId
+| order by TimeGenerated desc
