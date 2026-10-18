@@ -1,0 +1,41 @@
+
+ // Query 1: Review recent administrative activity
+ AzureActivity
+ | where TimeGenerated between (datetime(2026-10-14T00:00:00Z) .. datetime(2026-10-15T00:00:00Z))
+ | where OperationNameValue has_any ("roleAssignments", "securityRules", "virtualMachines/delete")
+ | project TimeGenerated, Caller, OperationNameValue,
+           ActivityStatusValue, ResourceGroup, ResourceId, CorrelationId
+ | order by TimeGenerated asc
+
+ // Query 2: Find role assignment changes
+ AzureActivity
+ | where TimeGenerated between (datetime(2026-10-14T00:00:00Z) .. datetime(2026-10-15T00:00:00Z))
+ | where OperationNameValue has "Microsoft.Authorization/roleAssignments"
+ | project TimeGenerated, Caller, OperationNameValue,
+           ActivityStatusValue, ResourceId, CorrelationId
+ | order by TimeGenerated asc
+
+ // Query 3: Review NSG security rule changes
+ AzureActivity
+ | where TimeGenerated between (datetime(2026-10-14T00:00:00Z) .. datetime(2026-10-15T00:00:00Z))
+ | where OperationNameValue has "Microsoft.Network/networkSecurityGroups/securityRules"
+ | project TimeGenerated, Caller, OperationNameValue,
+           ActivityStatusValue, ResourceId, ResourceGroup, CorrelationId
+ | order by TimeGenerated asc
+
+ // Query 4: Identify failed operations
+ AzureActivity
+ | where TimeGenerated between (datetime(2026-10-14T00:00:00Z) .. datetime(2026-10-15T00:00:00Z))
+ | where ActivityStatusValue =~ "Failure"
+       or ActivityStatusValue =~ "Failed"
+ | project TimeGenerated, Caller, OperationNameValue,
+           ActivityStatusValue, ResourceId, ResourceGroup, CorrelationId
+ | order by TimeGenerated asc
+
+ // Query 5: Review resource deletion activity
+ AzureActivity
+ | where TimeGenerated between (datetime(2026-10-14T00:00:00Z) .. datetime(2026-10-15T00:00:00Z))
+ | where OperationNameValue has "/delete"
+ | project TimeGenerated, Caller, OperationNameValue,
+           ActivityStatusValue, ResourceId, ResourceGroup, CorrelationId
+ | order by TimeGenerated asc
