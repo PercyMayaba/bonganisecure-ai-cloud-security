@@ -1,0 +1,16 @@
+
+[
+  {
+    "TimeGenerated": "2026-10-14T08:00:00Z",
+    "EventId": "SYN-001",
+    "OperationNameValue": "Microsoft.Authorization/roleAssignments/write",
+    "ActivityStatusValue": "Success",
+    "Caller": "admin.alex@example.test",
+    "ResourceId": "/subscriptions/SYNTHETIC-SUB/resourceGroups/Finance-RG/providers/Microsoft.Authorization/roleAssignments/RA-001",
+    "ResourceGroup": "Finance-RG",
+    "Target": "Privileged role assignment",
+    "Details": "Synthetic role assignment created",
+    "CorrelationId": "CORR-1001",
+    "SourceIpAddress": "203.0.113.24"
+  }
+]
