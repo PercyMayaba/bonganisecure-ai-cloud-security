@@ -1,0 +1,28 @@
+Day 5 KQL Validation Notes
+
+Purpose
+
+This document records the validation status of the KQL examples included in the Azure security incident investigation lab.
+
+Validation status
+
+- Synthetic event dataset: created for training.
+- Incident timeline: derived from the synthetic timestamps and event descriptions.
+- KQL examples: drafted for the AzureActivity table.
+- Live query execution: not performed.
+- Live alert generation: not performed.
+- Production readiness: not established.
+
+Validation checklist for a future Azure workspace
+
+1. Confirm that Azure Activity Log records are being ingested into the intended Log Analytics workspace.
+2. Inspect the actual "AzureActivity" schema and confirm the availability and names of fields used in the queries.
+3. Confirm the status values used for successful and failed operations.
+4. Run each query against an appropriate historical time range.
+5. Compare query results with known activity records to check for missed events and false positives.
+6. Tune filters, time windows, and alert thresholds before operational use.
+7. Document the tested workspace, validation date, query version, and observed results without publishing sensitive identifiers.
+
+Conclusion
+
+The KQL file provides an investigation starting point. The queries should not be represented as tested detections until they have been executed and validated against real, authorised log data.
