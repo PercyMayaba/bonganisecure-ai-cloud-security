@@ -9,6 +9,7 @@ My objective is to combine my financial services background with my knowledge of
 
 The projects in this repository focus on security fundamentals, least privilege, evidence-based investigation, secure AI application design, and clear technical documentation.
 
+
 Technical Focus Areas
 
 - Azure Identity and Access Management: Role-Based Access Control (RBAC), managed identities, role assignment review, and least privilege.
