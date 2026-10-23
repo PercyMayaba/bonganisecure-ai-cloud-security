@@ -1,0 +1,63 @@
+
+{
+  "lab_name": "BonganiSecure AI Agent Identity Lab",
+  "implementation_status": "SIMULATION_ONLY",
+  "live_entra_agent_id_provisioned": false,
+  "agents": [
+    {
+      "agent_id": "AGENT-RESEARCH-001",
+      "name": "Research Agent",
+      "purpose": "Retrieve authorised synthetic documents",
+      "identity_model": "Simulated Entra Agent ID",
+      "permissions": [
+        "read_risk_documents",
+        "read_shared_documents"
+      ],
+      "denied_actions": [
+        "modify_role_assignments",
+        "delete_resources",
+        "send_external_messages"
+      ],
+      "sponsor": "Synthetic Security Team",
+      "environment": "Development"
+    },
+    {
+      "agent_id": "AGENT-RISK-002",
+      "name": "Risk Analysis Agent",
+      "purpose": "Analyse permitted research results",
+      "identity_model": "Simulated Entra Agent ID",
+      "permissions": [
+        "analyse_approved_context"
+      ],
+      "denied_actions": [
+        "direct_document_store_access",
+        "modify_role_assignments",
+        "approve_own_actions"
+      ],
+      "sponsor": "Synthetic Risk Team",
+      "environment": "Development"
+    },
+    {
+      "agent_id": "AGENT-REPORT-003",
+      "name": "Reporting Agent",
+      "purpose": "Draft a report for human review",
+      "identity_model": "Simulated Entra Agent ID",
+      "permissions": [
+        "create_report_draft"
+      ],
+      "denied_actions": [
+        "send_external_messages",
+        "modify_permissions",
+        "approve_own_actions"
+      ],
+      "sponsor": "Synthetic Security Team",
+      "environment": "Development"
+    }
+  ],
+  "security_notes": [
+    "These identifiers are fictional portfolio identifiers.",
+    "No Microsoft Entra objects have been created by this file.",
+    "Permissions are design declarations, not enforced cloud permissions.",
+    "The application must enforce authorisation on the server side."
+  ]
+}
